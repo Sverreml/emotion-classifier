@@ -21,20 +21,17 @@ def loadModel(path):
 
 def predict(model, image):
     image = preprocess_image(image)
-    return (model.predict(image), tf.argmax(model.predict(image), axis=1))
+    emotions = ["Angry", "Fear", "Happy", "Sad", "Suprise"]
+    predictions = model.predict(image)
+    return predictions[0], emotions[tf.argmax(predictions, axis=1)[0]]
 
 if __name__ == "__main__":
     # Example usage
-    model = loadModel("Models\\final_classifier.keras")
-    sample_image = tf.random.uniform((200, 200, 3))  # Example image
-    predictions = predict(model, sample_image)
+    model = loadModel("Models/final_classifier_1.0.0.keras")
+    sample_image = "Data/Pictures/Angry/pexels-olly-3812754.jpg"
+    image = tf.io.read_file(sample_image)
+    image = tf.image.decode_png(image, channels=3)
+    predictions, predicted_class = predict(model, image)
     print("Predictions:", predictions)
-    loss = keras.losses.SparseCategoricalCrossentropy()
-    predicted_class = tf.argmax(predictions, axis=1)
-    print("Predicted class:", predicted_class.numpy())
-    print("Loss value:", loss([1], predictions).numpy())
-    model, image = None, None  # Free up resources
-    tf.keras.backend.clear_session()
-    print("Resources cleared.")
-    print("Inference complete.")
+    print("Predicted class:", predicted_class)
 
