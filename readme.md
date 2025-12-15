@@ -1,5 +1,5 @@
 ================================================================================  
-EMOTION CLASSIFIER - Real-time Facial Emotion Recognition System
+EMOTION CLASSIFIER - Real-time Facial Emotion Recognition System  
 ================================================================================  
 
 PROJECT OVERVIEW  
@@ -15,7 +15,7 @@ Features:
 - Model checkpointing and early stopping during training
 
 
-INSTALLATION & SETUP
+INSTALLATION & SETUP  
 ================================================================================  
 1. Install Python dependencies:
    pip install -r requirements.txt
@@ -32,7 +32,7 @@ INSTALLATION & SETUP
    Models/ (contains .keras model files)
 
 
-USAGE
+USAGE  
 ================================================================================  
 
 Real-time Webcam Detection:
@@ -55,7 +55,7 @@ Train Model:
   (Trains CNN for ~100 epochs with callbacks)
 
 
-PROJECT STRUCTURE
+PROJECT STRUCTURE  
 ================================================================================  
 
 CameraView.py              - Real-time emotion detection using webcam
@@ -74,7 +74,7 @@ Models/
   └── stabilized_model.keras
 
 
-KEY COMPONENTS
+KEY COMPONENTS  
 ================================================================================  
 
 Model Architecture (src/model.py):
@@ -98,7 +98,7 @@ Inference (src/inference.py):
 - Loads models with custom safety mode
 
 
-KNOWN ISSUES / TODO
+KNOWN ISSUES / TODO  
 ================================================================================  
 - CameraView.py resizes to 48x48 (mismatch with model's 180x180 training)
 - Path separators use Windows backslashes (needs cross-platform fix)
