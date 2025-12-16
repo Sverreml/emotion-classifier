@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from model import __version__
+from config import VERSION
 import inference
 import tensorflow as tf
 import numpy as np
@@ -10,7 +10,7 @@ app = FastAPI()
 
 # Load model on startup
 try:
-    model_path = f"Models/final_classifier_{__version__}.keras"
+    model_path = f"Models/final_classifier_{VERSION}.keras"
     model = inference.loadModel(model_path)
 except Exception as e:
     print(f"Warning: Could not load model at {model_path}: {e}")
@@ -20,7 +20,7 @@ except Exception as e:
 def read_root():
     return {
         "message": "Welcome to the Emotion Classification API",
-        "version": __version__,
+        "version": VERSION,
         "emotions": ["Angry", "Fear", "Happy", "Sad", "Surprise"]
     }
 

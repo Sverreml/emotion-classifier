@@ -1,37 +1,69 @@
 import tensorflow as tf
 import keras
 
+IMAGE_SIZE = (180, 180)
+CLASS_NAMES = ["Angry", "Fear", "Happy", "Sad", "Surprise"]
+
+# ----------------------------
+# Model loading
+# ----------------------------
+
+def load_model(path):
+    return keras.models.load_model(path)
+
+
+# ----------------------------
+# Preprocessing
+# ----------------------------
+
 def preprocess_image(image):
-    """Resize and preprocess image for prediction"""
-    import tensorflow as tf
-    # Resize to 180x180 if needed
-    if image.shape[0] != 180 or image.shape[1] != 180:
-        image = tf.image.resize(image, [180, 180])
-    # Add batch dimension
+    """
+    image: Tensor [H, W, 3], dtype uint8 or float32
+    returns: Tensor [1, 180, 180, 3]
+    """
+    image = tf.image.resize(image, IMAGE_SIZE)
     image = tf.expand_dims(image, axis=0)
     return image
 
-def loadModel(path):
-    return keras.saving.load_model(
-        path,
-        custom_objects=None,
-        compile=True,
-        safe_mode=True
-    )
+
+def load_image_from_path(path):
+    image = tf.io.read_file(path)
+    image = tf.image.decode_image(image, channels=3, expand_animations=False)
+    return image
+
+
+# ----------------------------
+# Prediction
+# ----------------------------
 
 def predict(model, image):
     image = preprocess_image(image)
-    emotions = ["Angry", "Fear", "Happy", "Sad", "Suprise"]
-    predictions = model.predict(image)
-    return predictions[0], emotions[tf.argmax(predictions, axis=1)[0]]
+    probs = model(image, training=False)[0]
+
+    class_idx = tf.argmax(probs).numpy()
+    confidence = probs[class_idx].numpy()
+
+    return {
+        "class_index": class_idx,
+        "class_name": CLASS_NAMES[class_idx],
+        "confidence": float(confidence),
+        "probabilities": probs.numpy()
+    }
+
+
+# ----------------------------
+# Example usage
+# ----------------------------
 
 if __name__ == "__main__":
-    # Example usage
-    model = loadModel("Models/final_classifier_1.0.0.keras")
-    sample_image = "Data/Pictures/Angry/pexels-olly-3812754.jpg"
-    image = tf.io.read_file(sample_image)
-    image = tf.image.decode_png(image, channels=3)
-    predictions, predicted_class = predict(model, image)
-    print("Predictions:", predictions)
-    print("Predicted class:", predicted_class)
+    model = load_model("Models/final_classifier_1.0.0.keras")
 
+    image = load_image_from_path(
+        "Data/Pictures/Angry/pexels-olly-3812754.jpg"
+    )
+
+    result = predict(model, image)
+
+    print(f"Predicted class: {result['class_name']}")
+    print(f"Confidence: {result['confidence']:.3f}")
+    print("Probabilities:", result["probabilities"])

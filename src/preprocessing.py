@@ -1,10 +1,10 @@
 import os, pathlib, shutil
 
-original_dir = pathlib.Path("Data\\Pictures")
-new_base_dir = pathlib.Path("Data\\Sets")
+original_dir = pathlib.Path("Data/Pictures")
+new_base_dir = pathlib.Path("Data/Sets")
 
 def make_subset():
-    for category in ("Angry", "Fear", "Happy", "Sad", "Suprise"):
+    for category in ("Angry", "Fear", "Happy", "Sad", "Surprise"):
         print(f"current category: {category}")
         dir = original_dir / category
         datasize = 0
@@ -16,7 +16,7 @@ def make_subset():
 
         for step, subset in enumerate(["train", "validation", "test"]):
             print(f"current subset: {subset}")
-            indicies = [0, round(datasize * 0.5), round(datasize*0.75), datasize]
+            indicies = [0, round(datasize * 0.75), round(datasize*0.75), datasize]
             dir = new_base_dir / subset / category
             os.makedirs(dir)
 
