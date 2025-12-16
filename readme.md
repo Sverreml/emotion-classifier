@@ -1,9 +1,9 @@
-================================================================================
-EMOTION CLASSIFIER - Real-time Facial Emotion Recognition System
-================================================================================
+================================================================================  
+EMOTION CLASSIFIER - Real-time Facial Emotion Recognition System  
+================================================================================  
 
-PROJECT OVERVIEW
-================================================================================
+PROJECT OVERVIEW  
+================================================================================  
 A Python-based emotion detection system using deep learning (TensorFlow/Keras).
 Detects 5 emotions: Angry, Fear, Happy, Sad, Surprise
 
@@ -15,8 +15,8 @@ Features:
 - Model checkpointing and early stopping during training
 
 
-INSTALLATION & SETUP
-================================================================================
+INSTALLATION & SETUP  
+================================================================================  
 1. Install Python dependencies:
    pip install -r requirements.txt
 
@@ -32,8 +32,8 @@ INSTALLATION & SETUP
    Models/ (contains .keras model files)
 
 
-USAGE
-================================================================================
+USAGE  
+================================================================================  
 
 Real-time Webcam Detection:
   python CameraView.py
@@ -55,8 +55,8 @@ Train Model:
   (Trains CNN for ~100 epochs with callbacks)
 
 
-PROJECT STRUCTURE
-================================================================================
+PROJECT STRUCTURE  
+================================================================================  
 
 CameraView.py              - Real-time emotion detection using webcam
 src/
@@ -74,8 +74,8 @@ Models/
   └── stabilized_model.keras
 
 
-KEY COMPONENTS
-================================================================================
+KEY COMPONENTS  
+================================================================================  
 
 Model Architecture (src/model.py):
 - 4 convolutional blocks with batch normalization
@@ -98,8 +98,8 @@ Inference (src/inference.py):
 - Loads models with custom safety mode
 
 
-KNOWN ISSUES / TODO
-================================================================================
+KNOWN ISSUES / TODO  
+================================================================================  
 - CameraView.py resizes to 48x48 (mismatch with model's 180x180 training)
 - Path separators use Windows backslashes (needs cross-platform fix)
 - FastAPI model path uses backslashes (should use forward slashes)
@@ -109,7 +109,7 @@ KNOWN ISSUES / TODO
 
 
 REQUIREMENTS
-================================================================================
+================================================================================  
 Python 3.8+
 - tensorflow >= 2.10
 - keras
@@ -122,7 +122,7 @@ Python 3.8+
 
 
 NOTES
-================================================================================
+================================================================================  
 - Emotion classes: Angry, Fear, Happy, Sad, Surprise (note: "Suprise" spelling)
 - Model was trained on balanced dataset splits
 - Images are normalized to [0,1] range during preprocessing
